@@ -1,8 +1,9 @@
 package az.xazar.msbusinesstrip.service;
 
 import az.xazar.msbusinesstrip.model.BTDto;
+import az.xazar.msbusinesstrip.model.FileNameDto;
 
 public interface BTServiceInt {
-     BTDto edit(String fileName, Long id);
+     BTDto edit(FileNameDto nameDto);
      void delete(Long id);
 }

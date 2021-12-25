@@ -3,6 +3,7 @@ package az.xazar.msbusinesstrip.service;
 import az.xazar.msbusinesstrip.entity.BTEntity;
 import az.xazar.msbusinesstrip.mapper.BTMapper;
 import az.xazar.msbusinesstrip.model.BTDto;
+import az.xazar.msbusinesstrip.model.FileNameDto;
 import az.xazar.msbusinesstrip.repository.BTRepo;
 import az.xazar.msbusinesstrip.util.BTUtil;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,18 @@ public class BTServiceIntImpl implements BTServiceInt {
     }
 
     @Override
-    public BTDto edit(String fileName,
-                      Long id) {
-        BTEntity entity = util.findBT(id);
-        entity.setScannedFile(fileName);
+    public BTDto edit(FileNameDto nameDto) {
+        BTEntity entity = util.findBT(nameDto.getId());
+        entity.setScannedFile(nameDto.getScannedFile());
         repo.save(entity);
         return mapper.toDto(entity);
     }
 
     @Override
     public void delete(Long id) {
-        edit(null, id);
+        BTEntity entity = util.findBT(id);
+        entity.setScannedFile(null);
+        repo.save(entity);
     }
 
 }

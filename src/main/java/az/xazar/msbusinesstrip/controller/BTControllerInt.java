@@ -1,6 +1,7 @@
 package az.xazar.msbusinesstrip.controller;
 
 import az.xazar.msbusinesstrip.model.BTDto;
+import az.xazar.msbusinesstrip.model.FileNameDto;
 import az.xazar.msbusinesstrip.service.BTService;
 import az.xazar.msbusinesstrip.service.BTServiceInt;
 import org.springframework.http.HttpStatus;
@@ -19,16 +20,15 @@ public class BTControllerInt {
     }
 
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<BTDto> edit(@PathVariable String fileName,
-                                      @PathVariable Long id) {
+    @PostMapping()
+    public ResponseEntity<BTDto> createFileName(@RequestBody FileNameDto nameDto) {
         return new ResponseEntity<>(
-                service.edit(fileName,id), HttpStatus.OK);
+                service.edit(nameDto), HttpStatus.OK);
     }
 
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteFileName(@PathVariable Long id) {
         service.delete(id);
     }
 }
