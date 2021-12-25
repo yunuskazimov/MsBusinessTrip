@@ -1,30 +1,30 @@
 package az.xazar.msbusinesstrip.util;
 
-import az.xazar.msbusinesstrip.entity.BTEntity;
-import az.xazar.msbusinesstrip.model.exception.BTNotFoundException;
-import az.xazar.msbusinesstrip.model.exception.ErrorCodes;
-import az.xazar.msbusinesstrip.repository.BTRepo;
+import az.xazar.msbusinesstrip.entity.BusinessTripEntity;
+import az.xazar.msbusinesstrip.error.ErrorCodes;
+import az.xazar.msbusinesstrip.exception.BusinessTripNotFoundException;
+import az.xazar.msbusinesstrip.repository.BusinessTripRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class BTUtil {
-    private final BTRepo repo;
+    private final BusinessTripRepo repo;
 
-    public BTUtil(BTRepo repo) {
+    public BTUtil(BusinessTripRepo repo) {
         this.repo = repo;
     }
 
-    public BTEntity findBT(Long id) {
+    public BusinessTripEntity findBT(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
-                        new BTNotFoundException(ErrorCodes.NOT_FOUND));
+                        new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
     }
 
-    public List<BTEntity> findBTByUserId(Long userId) {
+    public List<BusinessTripEntity> findBTByUserId(Long userId) {
         return repo.findAllByUserId(userId)
                 .orElseThrow(() ->
-                        new BTNotFoundException(ErrorCodes.NOT_FOUND));
+                        new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
     }
 }

@@ -1,34 +1,44 @@
 package az.xazar.msbusinesstrip.controller;
 
-import az.xazar.msbusinesstrip.model.BTDto;
+import az.xazar.msbusinesstrip.client.MinioClient;
+import az.xazar.msbusinesstrip.model.BusinessTripDto;
 import az.xazar.msbusinesstrip.model.FileNameDto;
-import az.xazar.msbusinesstrip.service.BTService;
-import az.xazar.msbusinesstrip.service.BTServiceInt;
+import az.xazar.msbusinesstrip.service.BusinessTripServiceInt;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/int/businesstrip")
 public class BTControllerInt {
-    private final BTServiceInt service;
-
-    public BTControllerInt(BTServiceInt service) {
+    private final BusinessTripServiceInt service;
+    private final MinioClient minioClient;
+    public BTControllerInt(BusinessTripServiceInt service, MinioClient minioClient) {
         this.service = service;
+        this.minioClient = minioClient;
     }
 
 
     @PostMapping()
-    public ResponseEntity<BTDto> createFileName(@RequestBody FileNameDto nameDto) {
+    public ResponseEntity<BusinessTripDto> createFileName(@RequestBody FileNameDto nameDto) {
         return new ResponseEntity<>(
                 service.edit(nameDto), HttpStatus.OK);
     }
 
-
     @DeleteMapping("/{id}")
     public void deleteFileName(@PathVariable Long id) {
         service.delete(id);
+    }
+
+
+    @PostMapping("/image/{id}")
+    @ApiOperation(value = "Add User File")
+    public ResponseEntity<String> createImage(@PathVariable("id") Long id,
+                                              @Valid @RequestParam MultipartFile file){
+        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(minioClient.getById(file,id));
     }
 }
