@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    username: xazar1
+    password: xazar1
+    url: jdbc:postgresql://localhost:5400/business_trip
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml
+    enabled: true
+
+server:
+  port: 8043
+
+client:
+  user:
+    int:
+
