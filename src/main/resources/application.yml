@@ -18,6 +18,7 @@ server:
   port: 8043
 
 client:
-  user:
+  minio:
     int:
+      url: http://localhost:8052/api/v1/file/image
 

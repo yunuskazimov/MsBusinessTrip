@@ -1,7 +1,7 @@
-package az.xazar.msbusinesstrip.errorHandler;
+package az.xazar.msbusinesstrip.error;
 
 import az.xazar.msbusinesstrip.model.ErrorDto;
-import az.xazar.msbusinesstrip.model.exception.BTNotFoundException;
+import az.xazar.msbusinesstrip.exception.BusinessTripNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import static az.xazar.msbusinesstrip.model.exception.ErrorCodes.NOT_FOUND;
-import static az.xazar.msbusinesstrip.model.exception.ErrorCodes.UNEXPECTED_EXCEPTION;
+import static az.xazar.msbusinesstrip.error.ErrorCodes.NOT_FOUND;
+import static az.xazar.msbusinesstrip.error.ErrorCodes.UNEXPECTED_EXCEPTION;
 
 
 @ControllerAdvice
 public class ErrorHandler extends ResponseEntityExceptionHandler {
+
     Logger logger = LoggerFactory.getLogger(ErrorHandler.class.getName());
 
-    @ExceptionHandler(BTNotFoundException.class)
-    public ResponseEntity<Object> handleAdNotFoundException(BTNotFoundException ex,
+    @ExceptionHandler(BusinessTripNotFoundException.class)
+    public ResponseEntity<Object> handleAdNotFoundException(BusinessTripNotFoundException ex,
                                                             WebRequest webRequest) {
         logger.info(ex.toString());
 
