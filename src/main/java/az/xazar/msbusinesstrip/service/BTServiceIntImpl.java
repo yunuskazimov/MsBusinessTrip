@@ -24,9 +24,11 @@ public class BTServiceIntImpl implements BTServiceInt {
 
     @Override
     public BTDto edit(FileNameDto nameDto) {
+
         BTEntity entity = util.findBT(nameDto.getId());
         entity.setScannedFile(nameDto.getScannedFile());
         repo.save(entity);
+
         return mapper.toDto(entity);
     }
 
