@@ -15,18 +15,5 @@ public class RestTemplateConfig {
         return new RestTemplate();
     }
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-    }
-
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver(){
-//        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-//        commonsMultipartResolver.setDefaultEncoding("utf-8");
-//        commonsMultipartResolver.setMaxUploadSize(50000000);
-//        return commonsMultipartResolver;
-//    }
-
 }
 
