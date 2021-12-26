@@ -17,6 +17,7 @@ import javax.validation.Valid;
 public class BTControllerInt {
     private final BusinessTripServiceInt service;
     private final MinioClient minioClient;
+
     public BTControllerInt(BusinessTripServiceInt service, MinioClient minioClient) {
         this.service = service;
         this.minioClient = minioClient;
@@ -37,8 +38,10 @@ public class BTControllerInt {
 
     @PostMapping("/image/{id}")
     @ApiOperation(value = "Add User File")
-    public ResponseEntity<String> createImage(@PathVariable("id") Long id,
-                                              @Valid @RequestParam MultipartFile file){
-        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(minioClient.getById(file,id));
+    public ResponseEntity<String> createImageToMsMinio(@PathVariable("id") Long id,
+                                                       @Valid @RequestParam MultipartFile file,
+                                                       @RequestParam String type) {
+        return ResponseEntity.status(HttpStatus.MULTI_STATUS)
+                .body(minioClient.postToMinio(id, file,type).getBody());
     }
 }
