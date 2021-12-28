@@ -29,7 +29,8 @@ public class BusinessTripEntity {
     private String result;
     private boolean isDeleted;
 
-    private String scannedFile;
+    private Long fileId;
+
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

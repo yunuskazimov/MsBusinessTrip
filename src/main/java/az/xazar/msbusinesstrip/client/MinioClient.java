@@ -26,10 +26,10 @@ public class MinioClient {
     }
 
     // @SneakyThrows
-    public ResponseEntity<String> postToMinio(@PathVariable Long id,
+    public ResponseEntity<String> postToMinio(@PathVariable Long userId,
                                               @Valid @RequestParam MultipartFile file,
                                               @RequestParam String type) {
-        String url = String.format("%s/%d", apiUrl, id);
+        String url = String.format("%s/%d", apiUrl, userId);
         return restTemplate.postForEntity(url, file, String.class);
     }
 

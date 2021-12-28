@@ -3,7 +3,7 @@ package az.xazar.msbusinesstrip.service.impl;
 import az.xazar.msbusinesstrip.entity.BusinessTripEntity;
 import az.xazar.msbusinesstrip.mapper.BusinessTripMapper;
 import az.xazar.msbusinesstrip.model.BusinessTripDto;
-import az.xazar.msbusinesstrip.model.FileNameDto;
+import az.xazar.msbusinesstrip.model.FileDto;
 import az.xazar.msbusinesstrip.repository.BusinessTripRepo;
 import az.xazar.msbusinesstrip.service.BusinessTripServiceInt;
 import az.xazar.msbusinesstrip.util.BTUtil;
@@ -25,10 +25,10 @@ public class BusinessTripServiceIntImpl implements BusinessTripServiceInt {
     }
 
     @Override
-    public BusinessTripDto edit(FileNameDto nameDto) {
+    public BusinessTripDto edit(FileDto fileDto) {
 
-        BusinessTripEntity entity = util.findBT(nameDto.getId());
-        entity.setScannedFile(nameDto.getScannedFile());
+        BusinessTripEntity entity = util.findBT(fileDto.getFileId());
+        entity.setFileId(fileDto.getFileId());
         repo.save(entity);
 
         return mapper.toDto(entity);
@@ -37,7 +37,7 @@ public class BusinessTripServiceIntImpl implements BusinessTripServiceInt {
     @Override
     public void delete(Long id) {
         BusinessTripEntity entity = util.findBT(id);
-        entity.setScannedFile(null);
+        entity.setFileId(0l);
         repo.save(entity);
     }
 

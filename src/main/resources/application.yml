@@ -20,5 +20,5 @@ server:
 client:
   minio:
     int:
-      url: http://localhost:8052/int/api/v1/file/image
+      url: http://localhost:8052/int/api
 

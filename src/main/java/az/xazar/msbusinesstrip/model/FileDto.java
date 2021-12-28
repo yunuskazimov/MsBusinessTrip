@@ -5,11 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FileNameDto {
-    private Long id;
-    private String scannedFile;
+public class FileDto {
+
+    private Long userId;
+    private Long fileId;
+
 }

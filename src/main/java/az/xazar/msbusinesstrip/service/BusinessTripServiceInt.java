@@ -1,11 +1,11 @@
 package az.xazar.msbusinesstrip.service;
 
 import az.xazar.msbusinesstrip.model.BusinessTripDto;
-import az.xazar.msbusinesstrip.model.FileNameDto;
+import az.xazar.msbusinesstrip.model.FileDto;
 
 public interface BusinessTripServiceInt {
 
-    BusinessTripDto edit(FileNameDto nameDto);
+    BusinessTripDto edit(FileDto nameDto);
 
     void delete(Long id);
 

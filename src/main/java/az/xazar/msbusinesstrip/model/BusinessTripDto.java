@@ -20,5 +20,5 @@ public class BusinessTripDto {
     private String result;
     private boolean isDeleted;
 
-    private String scannedFile;
+    private String fileId;
 }

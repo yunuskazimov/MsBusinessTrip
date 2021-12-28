@@ -2,7 +2,7 @@ package az.xazar.msbusinesstrip.controller;
 
 import az.xazar.msbusinesstrip.client.MinioClient;
 import az.xazar.msbusinesstrip.model.BusinessTripDto;
-import az.xazar.msbusinesstrip.model.FileNameDto;
+import az.xazar.msbusinesstrip.model.FileDto;
 import az.xazar.msbusinesstrip.service.BusinessTripServiceInt;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class BTControllerInt {
 
 
     @PostMapping()
-    public ResponseEntity<BusinessTripDto> createFileName(@RequestBody FileNameDto nameDto) {
+    public ResponseEntity<BusinessTripDto> createFileName(@RequestBody FileDto nameDto) {
         return new ResponseEntity<>(
                 service.edit(nameDto), HttpStatus.OK);
     }
@@ -36,12 +36,12 @@ public class BTControllerInt {
     }
 
 
-    @PostMapping("/image/{id}")
-    @ApiOperation(value = "Add User File")
-    public ResponseEntity<String> createImageToMsMinio(@PathVariable("id") Long id,
+    @PostMapping("/file/{id}")
+    @ApiOperation(value = "Add User File to MsMinio")
+    public ResponseEntity<String> createFileToMsMinio(@PathVariable("id") Long userId,
                                                        @Valid @RequestParam MultipartFile file,
                                                        @RequestParam String type) {
         return ResponseEntity.status(HttpStatus.MULTI_STATUS)
-                .body(minioClient.postToMinio(id, file,type).getBody());
+                .body(minioClient.postToMinio(userId, file,type).getBody());
     }
 }
