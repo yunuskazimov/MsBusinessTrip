@@ -3,21 +3,13 @@ package az.xazar.msbusinesstrip.client;
 import az.xazar.msbusinesstrip.exception.FileNotFoundException;
 import az.xazar.msbusinesstrip.model.FileDto;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static net.logstash.logback.argument.StructuredArguments.kv;
 
@@ -127,7 +119,7 @@ public class MinioClient {
         try {
             log.info("getFromMinio completed with {}", kv("fileName", fileName));
 
-            return restTemplate.getForObject(apiUrl + "/n/" + fileName, String.class);
+            return restTemplate.getForObject(apiUrl + "/url/" + fileName, String.class);
         } catch (FileNotFoundException e) {
             log.info("getFromMinio exception with {}", kv("fileName", fileName));
             throw new FileNotFoundException(e.getMessage());
