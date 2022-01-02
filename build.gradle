@@ -25,6 +25,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
+    implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.6'
+
     implementation 'org.liquibase:liquibase-core'
 
     runtimeOnly 'org.postgresql:postgresql:42.3.1'

@@ -1,16 +1,25 @@
 package az.xazar.msbusinesstrip.client;
 
+import az.xazar.msbusinesstrip.exception.FileNotFoundException;
+import az.xazar.msbusinesstrip.model.FileDto;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static net.logstash.logback.argument.StructuredArguments.kv;
 
 @Slf4j
 @Component
@@ -25,12 +34,107 @@ public class MinioClient {
         this.apiUrl = apiUrl;
     }
 
-    // @SneakyThrows
-    public ResponseEntity<String> postToMinio(@PathVariable Long userId,
-                                              @Valid @RequestParam MultipartFile file,
-                                              @RequestParam String type) {
-        String url = String.format("%s/%d", apiUrl, userId);
-        return restTemplate.postForEntity(url, file, String.class);
+    public ResponseEntity<FileDto> postToMinio(FileDto fileDto) {
+        log.info("postToMinio started with {}", kv("fileDto", fileDto));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        LinkedMultiValueMap<String, String> pdfHeaderMap = new LinkedMultiValueMap<>();
+        pdfHeaderMap.add("Content-disposition", "form-data; name=file; filename=" + fileDto.getFile().getOriginalFilename());
+        pdfHeaderMap.add("Content-type", "application/pdf");
+        pdfHeaderMap.add("Content-disposition", "form-data; name=userId; filename=" + fileDto.getUserId());
+        pdfHeaderMap.add("Content-type", "Long");
+        pdfHeaderMap.add("Content-disposition", "form-data; name=type; filename=" + fileDto.getType());
+        pdfHeaderMap.add("Content-type", "String");
+
+        HttpEntity<byte[]> file = null;
+        HttpEntity<Long> userId = null;
+        HttpEntity<String> type = null;
+
+        try {
+            file = new HttpEntity<byte[]>(fileDto.getFile().getBytes(), pdfHeaderMap);
+            userId = new HttpEntity<Long>(fileDto.getUserId());
+            type = new HttpEntity<String>(fileDto.getType());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LinkedMultiValueMap<String, Object> multipartReqMap = new LinkedMultiValueMap<>();
+        multipartReqMap.add("file", file);
+        multipartReqMap.add("userId", userId);
+        multipartReqMap.add("type", type);
+
+        HttpEntity<LinkedMultiValueMap<String, Object>> reqEntity = new HttpEntity<>(multipartReqMap, headers);
+        ResponseEntity<FileDto> rest = restTemplate.exchange(apiUrl, HttpMethod.POST, reqEntity, FileDto.class);
+        log.info("postToMinio completed with {}", kv("rest ", rest));
+        return rest;
+    }
+
+    public ResponseEntity<FileDto> putToMinio(FileDto fileDto) {
+        log.info("putToMinio started with {}", kv("fileDto", fileDto));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+
+        LinkedMultiValueMap<String, String> pdfHeaderMap = new LinkedMultiValueMap<>();
+        pdfHeaderMap.add("Content-disposition", "form-data; name=file; filename=" + fileDto.getFile().getOriginalFilename());
+        pdfHeaderMap.add("Content-type", "application/pdf");
+        pdfHeaderMap.add("Content-disposition", "form-data; name=userId; filename=" + fileDto.getUserId());
+        pdfHeaderMap.add("Content-type", "Long");
+        pdfHeaderMap.add("Content-disposition", "form-data; name=type; filename=" + fileDto.getType());
+        pdfHeaderMap.add("Content-type", "String");
+        pdfHeaderMap.add("Content-disposition", "form-data; name=fileId; filename=" + fileDto.getFileId());
+        pdfHeaderMap.add("Content-type", "Long");
+
+        HttpEntity<byte[]> file = null;
+        HttpEntity<Long> userId = null;
+        HttpEntity<String> type = null;
+        HttpEntity<Long> fileId = null;
+
+        try {
+            file = new HttpEntity<byte[]>(fileDto.getFile().getBytes(), pdfHeaderMap);
+            userId = new HttpEntity<Long>(fileDto.getUserId());
+            type = new HttpEntity<String>(fileDto.getType());
+            fileId = new HttpEntity<Long>(fileDto.getFileId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LinkedMultiValueMap<String, Object> multipartReqMap = new LinkedMultiValueMap<>();
+        multipartReqMap.add("file", file);
+        multipartReqMap.add("userId", userId);
+        multipartReqMap.add("type", type);
+        multipartReqMap.add("fileId", fileId);
+
+        HttpEntity<LinkedMultiValueMap<String, Object>> reqEntity = new HttpEntity<>(multipartReqMap, headers);
+
+        ResponseEntity<FileDto> rest = restTemplate.exchange(apiUrl, HttpMethod.PUT, reqEntity, FileDto.class);
+        log.info("putToMinio completed with {}", kv("rest ", rest));
+        return rest;
+    }
+
+    public void deleteToMinio(Long fileId) {
+        log.info("putToMinio started with {}", kv("fileId", fileId));
+        restTemplate.delete(apiUrl + "/" + fileId);
+        log.info("putToMinio completed with {}", kv("fileId", fileId));
+
+    }
+
+    public String getFromMinio(String fileName) {
+        log.info("getFromMinio started with {}", kv("fileName", fileName));
+
+        try {
+            log.info("getFromMinio completed with {}", kv("fileName", fileName));
+
+            return restTemplate.getForObject(apiUrl + "/n/" + fileName, String.class);
+        } catch (FileNotFoundException e) {
+            log.info("getFromMinio exception with {}", kv("fileName", fileName));
+            throw new FileNotFoundException(e.getMessage());
+        }
+
+
+
     }
 
 }
