@@ -13,13 +13,14 @@ public interface BusinessTripMapper {
 
     BusinessTripMapper INSTANCE = Mappers.getMapper(BusinessTripMapper.class);
 
+    @Mapping(target = "file", ignore = true)
     @Mapping(target = "isDeleted", source = "deleted")
-    BusinessTripDto toDto(BusinessTripEntity entity);
+    BusinessTripDto toBusinessTripDto(BusinessTripEntity entity);
 
-    List<BusinessTripDto> toDtos(List<BusinessTripEntity> entities);
+    List<BusinessTripDto> toBusinessTripDtoList(List<BusinessTripEntity> entities);
 
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "isDeleted", source = "deleted")
-    BusinessTripEntity toEntity(BusinessTripDto dto);
+  //  @Mapping(target = "isDeleted", source = "deleted")
+    BusinessTripEntity toBusinessTripEntity(BusinessTripDto dto);
 }

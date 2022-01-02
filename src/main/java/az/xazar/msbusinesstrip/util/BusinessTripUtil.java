@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BTUtil {
+public class BusinessTripUtil {
     private final BusinessTripRepo repo;
 
-    public BTUtil(BusinessTripRepo repo) {
+    public BusinessTripUtil(BusinessTripRepo repo) {
         this.repo = repo;
     }
 
-    public BusinessTripEntity findBT(Long id) {
+    public BusinessTripEntity findBusinessTrip(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
                         new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
     }
 
-    public List<BusinessTripEntity> findBTByUserId(Long userId) {
+    public List<BusinessTripEntity> findBusinessTripByUserId(Long userId) {
         return repo.findAllByUserId(userId)
                 .orElseThrow(() ->
                         new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
