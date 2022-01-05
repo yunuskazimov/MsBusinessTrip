@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface BusinessTripRepo extends JpaRepository<BusinessTripEntity, Long> {
     Optional<List<BusinessTripEntity>> findAllByUserId(Long userId);
+
+    Optional<BusinessTripEntity> findByUserId(Long userId);
 }

@@ -22,8 +22,14 @@ public class BusinessTripUtil {
                         new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
     }
 
-    public List<BusinessTripEntity> findBusinessTripByUserId(Long userId) {
+    public List<BusinessTripEntity> findBusinessTripListByUserId(Long userId) {
         return repo.findAllByUserId(userId)
+                .orElseThrow(() ->
+                        new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
+    }
+
+    public BusinessTripEntity findBusinessTripByUserId(Long userId) {
+        return repo.findByUserId(userId)
                 .orElseThrow(() ->
                         new BusinessTripNotFoundException(ErrorCodes.NOT_FOUND));
     }

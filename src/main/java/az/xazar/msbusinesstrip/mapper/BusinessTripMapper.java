@@ -21,6 +21,6 @@ public interface BusinessTripMapper {
 
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-  //  @Mapping(target = "isDeleted", source = "deleted")
+        //  @Mapping(target = "isDeleted", source = "deleted")
     BusinessTripEntity toBusinessTripEntity(BusinessTripDto dto);
 }
