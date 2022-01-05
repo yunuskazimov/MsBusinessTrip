@@ -1,5 +1,6 @@
 package az.xazar.msbusinesstrip.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class BusinessTripDto {
     private Long fileId;
     private String fileName;
 
-    @SuppressWarnings("java:S1948")
+    //@SuppressWarnings("java:S1948")
+    @JsonIgnore
     private MultipartFile file;
 }
