@@ -1,7 +1,6 @@
 package az.xazar.msbusinesstrip.service;
 
 import az.xazar.msbusinesstrip.model.BusinessTripDto;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface BusinessTripService {
 
     BusinessTripDto getById(Long id);
 
-   String getFileUrlById(Long id);
+    String getFileUrlById(Long id);
 
     List<BusinessTripDto> getList();
 

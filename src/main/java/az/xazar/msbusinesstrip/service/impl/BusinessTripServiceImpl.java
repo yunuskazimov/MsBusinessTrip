@@ -149,7 +149,9 @@ public class BusinessTripServiceImpl implements BusinessTripService {
 
     @Override
     public List<BusinessTripDto> getByUserId(Long userid) {
-        return businessTripMapper.toBusinessTripDtoList(util.findBusinessTripByUserId(userid));
+        util.findBusinessTripByUserId(userid);
+        return businessTripMapper
+                .toBusinessTripDtoList(util.findBusinessTripListByUserId(userid));
     }
 
 

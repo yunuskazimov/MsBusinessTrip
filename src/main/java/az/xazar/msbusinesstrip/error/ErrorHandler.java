@@ -1,7 +1,7 @@
 package az.xazar.msbusinesstrip.error;
 
-import az.xazar.msbusinesstrip.model.ErrorDto;
 import az.xazar.msbusinesstrip.exception.BusinessTripNotFoundException;
+import az.xazar.msbusinesstrip.model.ErrorDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
