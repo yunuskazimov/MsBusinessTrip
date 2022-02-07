@@ -1,21 +1,15 @@
-package az.xazar.msbusinesstrip.entity;
+package az.xazar.msbusinesstrip.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import az.xazar.msbusinesstrip.model.Result;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -31,8 +25,9 @@ public class BusinessTripEntity {
     private String note;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String result;
-    private boolean isDeleted;
+    @Enumerated(EnumType.STRING)
+    private Result result;
+    private boolean deleted;
     private Long fileId;
     private String fileName;
 

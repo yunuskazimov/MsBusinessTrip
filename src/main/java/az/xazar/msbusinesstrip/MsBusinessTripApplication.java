@@ -1,6 +1,5 @@
 package az.xazar.msbusinesstrip;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

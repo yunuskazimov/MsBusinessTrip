@@ -1,4 +1,4 @@
-package az.xazar.msbusinesstrip.error;
+package az.xazar.msbusinesstrip.exception;
 
 public final class ErrorCodes {
 

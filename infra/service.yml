@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-business-trip-loadbalancer
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8043
+  selector:
+    app: ms-business-trip

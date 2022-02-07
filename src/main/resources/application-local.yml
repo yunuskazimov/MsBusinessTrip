@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    username: xazar1
+    password: xazar1
+    url: jdbc:postgresql://localhost:5400/business_trip
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+  mvc:
+    format:
+      date: dd/MM/yyyy
+      date-time: dd/MM/yyyy HH:mm:ss
+
+
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml
+    enabled: false
+
+server:
+  port: 8043
+
+client:
+  minio:
+    int:
+      url: http://localhost:8053/int/api/file
+
+  users:
+    int:
+      url: http://localhost:8051/int/api/user/id
+
+  permission:
+    int:
+      url: http://localhost:8052/int/api/permission
