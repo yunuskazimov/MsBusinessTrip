@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-business-trip-deployment
+  labels:
+    app: ms-business-trip
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-business-trip
+  template:
+    metadata:
+      labels:
+        app: ms-business-trip
+    spec:
+      containers:
+        - env:
+            - name: DB_BT_URL
+              valueFrom:
+                secretKeyRef:
+                  key: MS_BT_URL
+                  name: ms.auth.secrets
+            - name: DB_BT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_USERNAME
+                  name: ms.auth.secrets
+            - name: DB_BT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: ms.auth.secrets
+            - name: MS_BT_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: MS_BT_PORT
+                  name: ms.auth.secrets
+            - name: CLINET_MS_USER_URL
+              valueFrom:
+                secretKeyRef:
+                  key: CLINET_MS_USER_URL
+                  name: ms.auth.secrets
+            - name: CLIENT_MS_MINIO_URL
+              valueFrom:
+                secretKeyRef:
+                  key: CLIENT_MS_MINIO_URL
+                  name: ms.auth.secrets
+            - name: CLIENT_MS_PERMISSION_URL
+              valueFrom:
+                secretKeyRef:
+                  key: CLIENT_MS_PERMISSION_URL
+                  name: ms.auth.secrets
+          name: ms-business-trip
+          image: yunuskazimov94/ms-business-trip
+          ports:
+            - containerPort: 8043
+              protocol: TCP
